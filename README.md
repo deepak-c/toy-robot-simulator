@@ -26,7 +26,7 @@ If the server starts up successfully, you would see logs like:
 <code>
 Running "web_server:server" (web_server) task
 Starting HTTP Server
-  <li> Listening on port 8000
+  <li> Listening on port 8080
   <li> Cross-Origin Resource Sharing is on
   <li> Cache suppressor is on
   <li> Request logger is on
