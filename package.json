@@ -1,0 +1,14 @@
+{
+  "name": "toyrobotsimulator",
+  "version": "1.0.0",
+  "description": "Toy Robot Simulator using Angular JS",
+  "main": "toyRobotController.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt-web-server": "^1.2.3"
+  }
+}

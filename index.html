@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="toyRobot">
+    <head>
+        <title>Toy Robot Simulator</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta charset="UTF-8">
+
+        <!-- load bootstrap and fontawesome via CDN -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+       
+        <style>                        
+            table {
+                width: 60% !important;
+            }
+                        
+            tr {
+                line-height: 100px;
+                min-height: 100px;
+                height: 100px;
+            }
+            
+            tr>td {
+                width: 20%;
+                text-align: center;
+                vertical-align: middle;
+            }            
+        </style>
+        
+        <!-- load dependent libraries via CDN -->
+        <script src="//code.angularjs.org/1.4.3/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-smart-table/2.1.1/smart-table.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-messages.js"></script>
+        <script src="js/toyRobotController.js"></script>
+    </head>
+    <body>
+
+        <header>
+			<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Toy Robot Simulator</a>
+				</div>
+			</div>
+			</nav>
+		</header>
+
+        <div class="container">          
+
+            <div ng-controller="robotController">    
+                
+                <table st-table="displayedCollection" st-safe-src="myData" class="table table-striped table-bordered">
+                    <tbody>
+                        <tr ng-repeat="data in displayedCollection">
+                            <td ng-repeat="col in data.row">
+                                <span ng-hide={{col.val}}>
+                                    <img src="resources/toyRobot.jpg" height="60" width="60"/>
+                                </span> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class='alert' ng-class="{'alert-danger' : errorMessages.length > 0}" 
+                        ng-show="errorMessages.length > 0">
+                    <div ng-repeat="error in errorMessages">                        
+                        <p ng-if="error == 'robotNotInitialized'">
+                            Robot not initialized, please "PLACE" robot before trying other instructions
+                        </p>
+                        <p ng-if="error == 'commandCannotBeEmpty'">PLACE Command cannot be empty</p>
+                        <p ng-if="error == 'commandRequiresParams'">
+                            PLACE Command requires parameters in the following format: xPos, yPos, direction (for ex. 0,0,SOUTH)
+                        </p>
+                        <p ng-if="error == 'xPosNotNull'">X Position value cannot be null</p>
+                        <p ng-if="error == 'xPosNotInRange'">Not a valid move</p>
+                        <p ng-if="error == 'yPosNotNull'">Y Position value cannot be null</p>
+                        <p ng-if="error == 'yPosNotInRange'">Not a valid move</p>
+                        <p ng-if="error == 'directionNotNull'">Direction cannot be null</p>
+                        <p ng-if="error == 'directionNotValid'">
+                            Valid values for directions are 'EAST', 'WEST', 'NORTH', 'SOUTH'
+                        </p>
+                    </div>
+                </div>
+                
+                <div class='alert' ng-class="{'alert-info' : infoMessages.length > 0}" ng-show="infoMessages.length > 0">
+                    <div ng-repeat="info in infoMessages">
+                        <p>{{info}}</p>
+                    </div>
+                </div>
+                
+                
+                <label> PLACE </label>
+                <input type="text" ng-model="placeCommand" placeholder="0,0,NORTH">                
+                <input type="button" class="btn btn-primary" value="{{initBtnLabel}}" ng-click="initialize()"/>
+                <input type="button" class="btn btn-default" value="Move" ng-click="moveRobot()" 
+                       ng-disabled="!isInitialized"/>
+                <input type="button" class="btn btn-default" value="Left" ng-click="rotate('LEFT')" 
+                       ng-disabled="!isInitialized"/>
+                <input type="button" class="btn btn-default" value="Right" ng-click="rotate('RIGHT')" 
+                       ng-disabled="!isInitialized"/>
+                <input type="button" class="btn btn-default" value="Report" ng-click="report()" 
+                       ng-disabled="!isInitialized"/>
+            </div>
+            
+		</div>
+
+    </body>
+</html>
